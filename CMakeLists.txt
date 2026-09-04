@@ -37,7 +37,9 @@ endif()
 
 if(G3X_BUILD_TESTS)
   enable_testing()
-  add_executable(g3x_q10_tests tests/BiquadFilterTests.cpp)
+  add_executable(g3x_q10_tests
+    tests/BiquadFilterTests.cpp
+    tests/Q10ProcessorTests.cpp)
   target_link_libraries(g3x_q10_tests PRIVATE g3x_q10_dsp)
   add_test(NAME g3x_q10_tests COMMAND g3x_q10_tests)
 endif()
