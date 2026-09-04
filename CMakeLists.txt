@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(G3XQ10 VERSION 0.1.0 LANGUAGES CXX)
+project(G3XQ10 VERSION 0.1.0 LANGUAGES C CXX)
 
 option(G3X_BUILD_TESTS "Build DSP tests" ON)
 option(G3X_BUILD_PLUGIN "Build JUCE plugin targets" ON)

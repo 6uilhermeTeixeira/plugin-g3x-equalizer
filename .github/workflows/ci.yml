@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - uses: lukka/get-cmake@latest
-      - run: cmake -S . -B build
+      - run: cmake -S . -B build -DG3X_BUILD_PLUGIN=OFF
       - run: cmake --build build --config Release --target g3x_q10_tests
       - run: ctest --test-dir build --build-config Release --output-on-failure
 
