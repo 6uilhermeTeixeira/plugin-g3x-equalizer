@@ -117,6 +117,8 @@ void testInvalidInputCannotPoisonState() {
 }
 }
 
+void runQ10ProcessorTests();
+
 int main() {
   testZeroGainIsExactIdentity();
   testBellGainAtCentre();
@@ -126,5 +128,6 @@ int main() {
   testAnalyticalResponseMatchesProcessedSine();
   testPolesRemainStableAcrossExtremes();
   testInvalidInputCannotPoisonState();
-  std::cout << "All G3X Q10 biquad tests passed\n";
+  runQ10ProcessorTests();
+  std::cout << "All G3X Q10 DSP tests passed\n";
 }

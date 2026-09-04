@@ -31,6 +31,19 @@ depender da curva ou dos coeficientes de outro produto.
 - Coeficientes instáveis são substituídos por identidade.
 - Entrada ou estado não finito é zerado e o estado interno é reiniciado.
 
+## Cadeia M2
+
+Cada canal mantém dez slots fixos, sem containers redimensionáveis no callback.
+Parâmetros contínuos e enable usam ramps lineares. Uma mudança de tipo processa
+temporariamente as topologias anterior e nova em paralelo e faz crossfade; ao
+fim do ramp, a nova instância assume o estado principal.
+
+O wrapper oferece parâmetros separados `bandN.*` e `bandN.right.*`. Com
+`stereoLink` ligado, o estado esquerdo alimenta ambos os canais; desligado, os
+dois conjuntos são processados independentemente. Ponteiros dos parâmetros são
+resolvidos na construção do plugin, evitando criação de strings e alocações no
+callback de áudio.
+
 ## Referência pública
 
 - Robert Bristow-Johnson, *Audio EQ Cookbook*, publicado originalmente no

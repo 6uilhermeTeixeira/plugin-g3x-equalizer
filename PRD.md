@@ -3,7 +3,7 @@
 | Campo | Definição |
 | --- | --- |
 | Versão | 0.1.0 |
-| Status | M1 implementado; M2 planejado |
+| Status | M2 implementado; M3 planejado |
 | Target inicial | C++20, JUCE fixado, CMake |
 | Entrega inicial | VST3 64-bit para Windows; Standalone para desenvolvimento |
 
@@ -150,6 +150,11 @@ Bell aplica a relação própria `Q efetivo = Q × (1 + |ganho| / 12)`, limitada
 - Liga/desliga da banda sem descontinuidade.
 - Nenhum parâmetro pode gerar NaN, Inf ou saída não limitada por erro numérico.
 
+O M2 implementa ramps lineares de 20 ms para frequência, ganho, Q, enable,
+input, output e bypass. Mudanças de tipo usam dois biquads e crossfade antes de
+promover a nova topologia. A cadeia usa armazenamento fixo de dez bandas por
+canal e não aloca memória durante o processamento.
+
 ## 8. Interface proposta
 
 - Gráfico logarítmico de resposta combinada com grade de frequência e ganho.
@@ -246,7 +251,8 @@ de suas curvas, coeficientes, presets e comportamento.
 1. **M0 — Fundação (concluído):** PRD, naming e arquitetura.
 2. **M1 — Filtros (concluído):** seis tipos, precisão dupla, resposta complexa,
    verificação de polos e testes analíticos/processados.
-3. **M2 — Produto:** dez bandas, estéreo, vínculo e automação.
+3. **M2 — Produto (concluído):** dez bandas, estéreo vinculado/dual-mono,
+   automação suavizada, bypass, ganhos globais e wrapper JUCE com estado.
 4. **M3 — Interface:** gráfico, tabela, foco e acessibilidade.
 5. **M4 — Windows Alpha:** CI MSVC, VST3, validadores e FL Studio.
 6. **M5 — Beta:** presets, performance, regressão e empacotamento.

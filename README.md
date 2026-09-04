@@ -7,7 +7,7 @@ CMake, seguindo o processo dos plugins G3X.
 
 ## Estado
 
-**M1 — seis filtros e validação analítica implementados.**
+**M2 — cadeia de dez bandas e produto estéreo implementados.**
 
 - [PRD](PRD.md)
 - [Referência visual e fontes](docs/references/README.md)
@@ -34,6 +34,12 @@ Nenhum ativo da Waves será incorporado ao produto final.
 - Consulta da resposta complexa e verificação dos polos de cada filtro.
 - Proteção contra parâmetros, entrada e estado numérico inválidos.
 - Testes analíticos e de processamento entre 44,1 e 192 kHz.
+- Cadeia fixa de dez bandas com slots inativos exatamente neutros.
+- Estéreo vinculado e estados independentes L/R para operação dual-mono.
+- Smoothing de 20 ms para frequência, ganho, Q, enable e ganhos globais.
+- Crossfade de topologia em mudanças de tipo e bypass geral sem clique.
+- Processamento de hosts em `float` e `double`, com zero latência adicionada.
+- Wrapper JUCE VST3/Standalone com IDs estáveis e estado versionado.
 
 ## Build
 
@@ -47,6 +53,7 @@ Os testes DSP também podem ser executados sem dependências externas:
 
 ```bash
 g++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc \
-  src/dsp/BiquadFilter.cpp tests/BiquadFilterTests.cpp -o g3x-q10-tests
+  src/dsp/BiquadFilter.cpp src/dsp/Q10Processor.cpp \
+  tests/BiquadFilterTests.cpp tests/Q10ProcessorTests.cpp -o g3x-q10-tests
 ./g3x-q10-tests
 ```

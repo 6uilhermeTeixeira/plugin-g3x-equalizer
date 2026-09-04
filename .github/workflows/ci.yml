@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
-      - run: g++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc src/dsp/BiquadFilter.cpp tests/BiquadFilterTests.cpp -o g3x-q10-tests
+      - run: g++ -std=c++20 -Wall -Wextra -Wpedantic -Werror -Isrc src/dsp/BiquadFilter.cpp src/dsp/Q10Processor.cpp tests/BiquadFilterTests.cpp tests/Q10ProcessorTests.cpp -o g3x-q10-tests
       - run: ./g3x-q10-tests
 
   windows-dsp-tests:
@@ -20,3 +20,11 @@ jobs:
       - run: cmake -S . -B build
       - run: cmake --build build --config Release --target g3x_q10_tests
       - run: ctest --test-dir build --build-config Release --output-on-failure
+
+  windows-vst3:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: lukka/get-cmake@latest
+      - run: cmake -S . -B build -DG3X_BUILD_TESTS=OFF -DG3X_BUILD_PLUGIN=ON
+      - run: cmake --build build --config Release --target G3XQ10_VST3 G3XQ10_Standalone
