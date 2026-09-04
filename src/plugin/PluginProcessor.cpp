@@ -10,7 +10,7 @@ std::string bandId(std::size_t band, const char* suffix, bool right = false) {
 
 }
 
-G3XQ10AudioProcessor::G3XQ10AudioProcessor()
+G3XEqualizerAudioProcessor::G3XEqualizerAudioProcessor()
   : AudioProcessor(BusesProperties()
       .withInput("Input", juce::AudioChannelSet::stereo(), true)
       .withOutput("Output", juce::AudioChannelSet::stereo(), true)),
@@ -27,7 +27,7 @@ G3XQ10AudioProcessor::G3XQ10AudioProcessor()
     }
 }
 
-juce::AudioProcessorValueTreeState::ParameterLayout G3XQ10AudioProcessor::createParameterLayout() {
+juce::AudioProcessorValueTreeState::ParameterLayout G3XEqualizerAudioProcessor::createParameterLayout() {
   juce::AudioProcessorValueTreeState::ParameterLayout layout;
   layout.add(std::make_unique<juce::AudioParameterFloat>(juce::ParameterID{"inputGainDb", 1},
     "Input gain", juce::NormalisableRange<float>{-24.0F, 12.0F, 0.1F}, 0.0F, "dB"));
@@ -64,53 +64,53 @@ juce::AudioProcessorValueTreeState::ParameterLayout G3XQ10AudioProcessor::create
   return layout;
 }
 
-void G3XQ10AudioProcessor::prepareToPlay(double sampleRate, int maximumBlockSize) {
+void G3XEqualizerAudioProcessor::prepareToPlay(double sampleRate, int maximumBlockSize) {
   juce::ignoreUnused(maximumBlockSize);
   dsp.prepare(sampleRate, static_cast<std::size_t>(getTotalNumOutputChannels()));
   updateParameters();
   setLatencySamples(static_cast<int>(dsp.latencySamples()));
 }
-void G3XQ10AudioProcessor::releaseResources() { dsp.reset(); }
-bool G3XQ10AudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const {
+void G3XEqualizerAudioProcessor::releaseResources() { dsp.reset(); }
+bool G3XEqualizerAudioProcessor::isBusesLayoutSupported(const BusesLayout& layouts) const {
   const auto input = layouts.getMainInputChannelSet();
   return input == layouts.getMainOutputChannelSet()
     && (input == juce::AudioChannelSet::mono() || input == juce::AudioChannelSet::stereo());
 }
 template <typename Sample>
-void G3XQ10AudioProcessor::process(juce::AudioBuffer<Sample>& buffer) {
+void G3XEqualizerAudioProcessor::process(juce::AudioBuffer<Sample>& buffer) {
   updateParameters();
   std::array<Sample*, 2> channels{buffer.getWritePointer(0),
     buffer.getNumChannels() > 1 ? buffer.getWritePointer(1) : nullptr};
   dsp.process(channels.data(), static_cast<std::size_t>(buffer.getNumChannels()),
     static_cast<std::size_t>(buffer.getNumSamples()));
 }
-void G3XQ10AudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer&) {
+void G3XEqualizerAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer, juce::MidiBuffer&) {
   juce::ScopedNoDenormals guard;
   process(buffer);
 }
-void G3XQ10AudioProcessor::processBlock(juce::AudioBuffer<double>& buffer, juce::MidiBuffer&) {
+void G3XEqualizerAudioProcessor::processBlock(juce::AudioBuffer<double>& buffer, juce::MidiBuffer&) {
   juce::ScopedNoDenormals guard;
   process(buffer);
 }
-juce::AudioProcessorEditor* G3XQ10AudioProcessor::createEditor() {
+juce::AudioProcessorEditor* G3XEqualizerAudioProcessor::createEditor() {
   return new juce::GenericAudioProcessorEditor(*this);
 }
-void G3XQ10AudioProcessor::getStateInformation(juce::MemoryBlock& destination) {
+void G3XEqualizerAudioProcessor::getStateInformation(juce::MemoryBlock& destination) {
   auto snapshot = state.copyState();
   snapshot.setProperty("stateVersion", 1, nullptr);
   if (auto xml = snapshot.createXml()) copyXmlToBinary(*xml, destination);
 }
-void G3XQ10AudioProcessor::setStateInformation(const void* data, int size) {
+void G3XEqualizerAudioProcessor::setStateInformation(const void* data, int size) {
   if (auto xml = getXmlFromBinary(data, size)) state.replaceState(juce::ValueTree::fromXml(*xml));
 }
-g3x::q10::BandSettings G3XQ10AudioProcessor::readBand(std::size_t band,
+g3x::q10::BandSettings G3XEqualizerAudioProcessor::readBand(std::size_t band,
     bool right) const noexcept {
   const auto& refs = bandParameters_[right ? 1U : 0U][band];
   return {refs.enabled->load() >= 0.5F,
     static_cast<g3x::q10::FilterType>(static_cast<int>(refs.type->load())),
     refs.frequency->load(), refs.gain->load(), refs.q->load()};
 }
-void G3XQ10AudioProcessor::updateParameters() noexcept {
+void G3XEqualizerAudioProcessor::updateParameters() noexcept {
   const auto linked = *state.getRawParameterValue("stereoLink") >= 0.5F;
   dsp.setStereoLinked(linked);
   dsp.setInputGainDb(*state.getRawParameterValue("inputGainDb"));
@@ -125,4 +125,4 @@ void G3XQ10AudioProcessor::updateParameters() noexcept {
   }
 }
 
-juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new G3XQ10AudioProcessor(); }
+juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter() { return new G3XEqualizerAudioProcessor(); }

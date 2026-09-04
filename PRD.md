@@ -1,4 +1,4 @@
-# G3X Q10 — Product Requirements Document
+# G3X Equalizer — Product Requirements Document
 
 | Campo | Definição |
 | --- | --- |
@@ -9,7 +9,7 @@
 
 ## 1. Visão do produto
 
-G3X Q10 é o nome de trabalho de um equalizador paramétrico transparente com até
+G3X Equalizer é o nome de trabalho de um equalizador paramétrico transparente com até
 dez bandas independentes. Ele combina edição direta no gráfico, valores
 numéricos precisos e uma visão focada para resolver ressonâncias, limpar o
 espectro e realizar modelagem tonal ampla sem impor coloração.
@@ -259,7 +259,7 @@ de suas curvas, coeficientes, presets e comportamento.
 
 ## 16. Decisões que precisam de confirmação
 
-- Confirmar `G3X Q10` como nome público ou manter apenas como codinome,
+- Confirmar `G3X Equalizer` como nome público ou manter apenas como codinome,
   considerando a proximidade com a marca Waves Q10.
 - Manter ±24 dB ou reduzir o ganho para uma faixa mais conservadora.
 - Semântica exata do vínculo ao reunir canais com estados diferentes.

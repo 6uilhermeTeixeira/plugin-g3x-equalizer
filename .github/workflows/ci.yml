@@ -27,4 +27,4 @@ jobs:
       - uses: actions/checkout@v5
       - uses: lukka/get-cmake@latest
       - run: cmake -S . -B build -DG3X_BUILD_TESTS=OFF -DG3X_BUILD_PLUGIN=ON
-      - run: cmake --build build --config Release --target G3XQ10_VST3 G3XQ10_Standalone
+      - run: cmake --build build --config Release --target G3XEqualizer_VST3 G3XEqualizer_Standalone

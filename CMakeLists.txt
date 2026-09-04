@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(G3XQ10 VERSION 0.1.0 LANGUAGES C CXX)
+project(G3XEqualizer VERSION 0.1.0 LANGUAGES C CXX)
 
 option(G3X_BUILD_TESTS "Build DSP tests" ON)
 option(G3X_BUILD_PLUGIN "Build JUCE plugin targets" ON)
@@ -22,15 +22,15 @@ if(G3X_BUILD_PLUGIN)
   FetchContent_Declare(JUCE GIT_REPOSITORY https://github.com/juce-framework/JUCE.git
     GIT_TAG 9.0.1 GIT_SHALLOW TRUE)
   FetchContent_MakeAvailable(JUCE)
-  juce_add_plugin(G3XQ10 COMPANY_NAME G3X BUNDLE_ID com.g3x.q10
+  juce_add_plugin(G3XEqualizer COMPANY_NAME G3X BUNDLE_ID com.g3x.equalizer
     PLUGIN_MANUFACTURER_CODE G3xx PLUGIN_CODE Gq10 FORMATS VST3 Standalone
-    PRODUCT_NAME "G3X Q10" IS_SYNTH FALSE NEEDS_MIDI_INPUT FALSE
+    PRODUCT_NAME "G3X Equalizer" IS_SYNTH FALSE NEEDS_MIDI_INPUT FALSE
     NEEDS_MIDI_OUTPUT FALSE IS_MIDI_EFFECT FALSE COPY_PLUGIN_AFTER_BUILD FALSE)
-  target_sources(G3XQ10 PRIVATE src/plugin/PluginProcessor.cpp src/plugin/PluginProcessor.hpp)
-  target_include_directories(G3XQ10 PRIVATE src)
-  target_compile_definitions(G3XQ10 PUBLIC
+  target_sources(G3XEqualizer PRIVATE src/plugin/PluginProcessor.cpp src/plugin/PluginProcessor.hpp)
+  target_include_directories(G3XEqualizer PRIVATE src)
+  target_compile_definitions(G3XEqualizer PUBLIC
     JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0)
-  target_link_libraries(G3XQ10 PRIVATE g3x_q10_dsp juce::juce_audio_utils
+  target_link_libraries(G3XEqualizer PRIVATE g3x_q10_dsp juce::juce_audio_utils
     juce::juce_recommended_config_flags juce::juce_recommended_lto_flags
     juce::juce_recommended_warning_flags)
 endif()

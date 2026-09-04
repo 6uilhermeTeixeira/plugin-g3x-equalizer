@@ -129,5 +129,5 @@ int main() {
   testPolesRemainStableAcrossExtremes();
   testInvalidInputCannotPoisonState();
   runQ10ProcessorTests();
-  std::cout << "All G3X Q10 DSP tests passed\n";
+  std::cout << "All G3X Equalizer DSP tests passed\n";
 }

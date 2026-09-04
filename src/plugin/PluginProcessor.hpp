@@ -5,9 +5,9 @@
 #include <juce_audio_utils/juce_audio_utils.h>
 #include "dsp/Q10Processor.hpp"
 
-class G3XQ10AudioProcessor final : public juce::AudioProcessor {
+class G3XEqualizerAudioProcessor final : public juce::AudioProcessor {
 public:
-  G3XQ10AudioProcessor();
+  G3XEqualizerAudioProcessor();
   static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
   void prepareToPlay(double, int) override;
   void releaseResources() override;
@@ -17,7 +17,7 @@ public:
   bool supportsDoublePrecisionProcessing() const override { return true; }
   juce::AudioProcessorEditor* createEditor() override;
   bool hasEditor() const override { return true; }
-  const juce::String getName() const override { return "G3X Q10"; }
+  const juce::String getName() const override { return "G3X Equalizer"; }
   double getTailLengthSeconds() const override { return 0.0; }
   bool acceptsMidi() const override { return false; }
   bool producesMidi() const override { return false; }
