@@ -8,3 +8,4 @@
 *.VC.db
 *.log
 .DS_Store
+/dist/
