@@ -1,8 +1,10 @@
-build/
+/build/
+/g3x-q10-tests
 .cache/
 .idea/
 .vscode/
 *.user
 *.suo
+*.VC.db
 *.log
 .DS_Store

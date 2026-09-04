@@ -3,7 +3,7 @@
 | Campo | Definição |
 | --- | --- |
 | Versão | 0.1.0 |
-| Status | proposta para confirmação |
+| Status | M1 implementado; M2 planejado |
 | Target inicial | C++20, JUCE fixado, CMake |
 | Entrega inicial | VST3 64-bit para Windows; Standalone para desenvolvimento |
 
@@ -130,6 +130,12 @@ Input
 - Ganho exatamente unitário para bandas bell/shelf em 0 dB, dentro da
   tolerância numérica definida pelos testes.
 
+No M1, os seis tipos usam biquads em forma transposta direta II, coeficientes
+normalizados e processamento em precisão dupla. A resposta complexa e os polos
+são expostos pela mesma estrutura de coeficientes usada no áudio. O Adaptive
+Bell aplica a relação própria `Q efetivo = Q × (1 + |ganho| / 12)`, limitada a
+100, preservando o ganho central enquanto estreita a largura com a intensidade.
+
 ### 7.2 Filtros de corte
 
 - Inclinação inicial: 12 dB/oitava por banda.
@@ -237,8 +243,9 @@ de suas curvas, coeficientes, presets e comportamento.
 
 ## 15. Marcos propostos
 
-1. **M0 — Fundação:** PRD, naming, licença e arquitetura.
-2. **M1 — Filtros:** seis tipos, precisão dupla e testes analíticos.
+1. **M0 — Fundação (concluído):** PRD, naming e arquitetura.
+2. **M1 — Filtros (concluído):** seis tipos, precisão dupla, resposta complexa,
+   verificação de polos e testes analíticos/processados.
 3. **M2 — Produto:** dez bandas, estéreo, vínculo e automação.
 4. **M3 — Interface:** gráfico, tabela, foco e acessibilidade.
 5. **M4 — Windows Alpha:** CI MSVC, VST3, validadores e FL Studio.

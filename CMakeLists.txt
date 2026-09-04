@@ -1,0 +1,22 @@
+cmake_minimum_required(VERSION 3.22)
+project(G3XQ10 VERSION 0.1.0 LANGUAGES CXX)
+
+option(G3X_BUILD_TESTS "Build DSP tests" ON)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+add_library(g3x_q10_dsp STATIC src/dsp/BiquadFilter.cpp)
+target_include_directories(g3x_q10_dsp PUBLIC src)
+if(MSVC)
+  target_compile_options(g3x_q10_dsp PRIVATE /W4 /permissive-)
+else()
+  target_compile_options(g3x_q10_dsp PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
+if(G3X_BUILD_TESTS)
+  enable_testing()
+  add_executable(g3x_q10_tests tests/BiquadFilterTests.cpp)
+  target_link_libraries(g3x_q10_tests PRIVATE g3x_q10_dsp)
+  add_test(NAME g3x_q10_tests COMMAND g3x_q10_tests)
+endif()
